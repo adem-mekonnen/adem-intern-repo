@@ -4,3 +4,4 @@ function calc(a, b) {
 }
 console.log(calc(1, 2));
 // test
+// test 2
