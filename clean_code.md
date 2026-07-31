@@ -154,3 +154,14 @@ def process_order(order):
 
 **Did formatting make the code easier to read:**
 - Yes — after running Prettier and fixing ESLint warnings, indentation and spacing became consistent throughout, and the Airbnb rules around naming and structure made the code easier to scan.
+## Understanding Clean Code Principles
+
+**Simplicity** – Code should do what's needed in the most straightforward way possible. Avoid clever one-liners or unnecessary abstraction layers that make the code harder to follow than a plain, direct solution would.
+
+**Readability** – Code is read far more often than it's written. It should be understandable at a glance, using clear names, consistent structure, and logical flow, so another developer (or future you) doesn't have to decode it.
+
+**Maintainability** – Code should be easy to modify, extend, or debug later without a large risk of breaking something else. This comes from small functions, clear naming, low duplication, and good structure.
+
+**Consistency** – Following agreed style guides and project conventions (naming, formatting, file structure) means the codebase feels like it was written by one person, even with multiple contributors, which reduces friction and confusion.
+
+**Efficiency** – Code should perform well, but performance shouldn't be chased prematurely at the cost of clarity. Optimize the parts that actually matter (measured, not guessed), and keep everything else simple and readable.
