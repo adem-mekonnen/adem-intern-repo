@@ -16,3 +16,21 @@ function updateHighScore(user, score) {
     return "New record!";
   }
 }
+---
+
+# Commenting & Documentation
+
+## Research: Best Practices
+* **Explain the "Why," not the "What":** Code tells you *what* is happening. Comments should tell you *why* it is happening (e.g., "Retrying because the API is unstable").
+* **Self-Documenting Code:** Use clear variable and function names so you don't need a comment to explain them.
+* **Keep it updated:** An outdated comment is worse than no comment at all.
+
+## Code Example: Bad vs. Good Comments
+
+### ❌ Poorly Commented Code
+```javascript
+// Function to add two numbers
+function add(a, b) {
+  let c = a + b; // add a and b and store in c
+  return c; // return the result
+}
