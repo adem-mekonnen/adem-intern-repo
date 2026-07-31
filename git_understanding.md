@@ -132,3 +132,16 @@ I opened the conflicted file and reviewed both versions side by side. I chose to
 
 **What did I learn?**
 A merge conflict isn't an error — it's Git correctly recognizing that two branches changed the same lines and it can't guess which version was intended. Resolving one means actually reading both versions and making a deliberate choice, rather than blindly accepting one side. This connects to what I saw with `git cherry-pick` in the previous issue — cherry-picking a commit onto a diverged branch triggered the exact same conflict-resolution mechanism as a normal merge, which showed me these aren't separate concepts but the same underlying process in Git.
+## Branching & Team Collaboration
+
+**Why is pushing directly to `main` problematic?**
+Pushing directly to `main` means unreviewed, untested code lands immediately in the branch everyone else builds from and deploys. There's no checkpoint to catch bugs, style issues, or design problems before they affect the whole team. It also removes the paper trail a Pull Request creates — a record of what changed, why, and who approved it — which makes it harder to understand the project's history later.
+
+**How do branches help with reviewing code?**
+Branches isolate work-in-progress from the stable `main` branch, so changes can be reviewed, discussed, and tested via a Pull Request before merging. This gives reviewers a clear, contained diff to evaluate, lets CI checks run against the proposed change specifically, and means `main` stays deployable at all times since nothing lands there without going through review first.
+
+**What happens if two people edit the same file on different branches?**
+If their changes touch different parts of the file, Git can usually merge them automatically without any conflict. But if they both modify the same lines, Git can't automatically decide which version is correct, resulting in a merge conflict — I saw this directly in a previous exercise, where two branches both added a `power` function to `math.js` with different implementations, and merging required manually resolving the conflict by choosing which version (or combination) to keep.
+
+**Hands-on test:**
+I created a branch (`branching-demo`), added a small comment to `math.js`, and committed it. Switching back to `main` confirmed the change wasn't present there — the commit existed only on the branch until merged, demonstrating exactly why branches let you experiment or develop safely without affecting the shared `main` branch.
