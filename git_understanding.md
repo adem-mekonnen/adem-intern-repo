@@ -84,3 +84,16 @@ Manually reviewing commits means checking them one at a time, which is linear �
 
 **Hands-on test:**
 I created a series of 5 commits in a test branch, where the 4th commit introduced a deliberate bug (a `divide` function that multiplied instead of dividing). Using `git bisect start`, marking the first commit as good and the last as bad, Git correctly identified the exact commit that introduced the bug after only 2-3 test steps, confirming how the binary search narrows down the culprit efficiently.
+## Understanding `git bisect`
+
+**What does `git bisect` do?**
+`git bisect` uses binary search across commit history to find the exact commit that introduced a bug. You mark one commit as "good" (before the bug existed) and another as "bad" (where the bug is present), and Git checks out commits in between, narrowing the search by half each time based on whether the bug is present, until it identifies the precise commit responsible.
+
+**When would you use it in a real-world debugging situation?**
+It's most useful when a bug is discovered well after it was introduced, and it isn't obvious which of many commits caused it — for example, a regression found in production that could have come from any of dozens of merges over the past few weeks. Rather than manually checking out and testing each commit in order, `git bisect` finds the source in a handful of steps.
+
+**How does it compare to manually reviewing commits?**
+Manually reviewing commits means checking them one at a time, which is linear — with 100 commits, you might need to check up to 100 of them. `git bisect`'s binary search only needs about log₂(n) steps to find the same commit, since each test eliminates half of the remaining possibilities. This makes it dramatically faster for large histories and removes guesswork, since you're following a systematic process instead of guessing which commit "looks suspicious."
+
+**Hands-on test:**
+I created 5 commits on a test branch (`bisect-practice`), where the 4th commit (`d427c3b`, "Add divide function") introduced a deliberate bug — a `divide` function that multiplied instead of dividing. Using `git bisect start`, marking `ce7c1a3` (a later commit) as bad and `9caaaf7` (the first commit) as good, Git checked out `ada9a05` ("Add multiply function") first. Since the bug wasn't present at that point, I marked it good. Git then checked out `d427c3b`, which contained the bug, so I marked it bad — and Git correctly reported:
