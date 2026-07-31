@@ -60,3 +60,15 @@ function getActiveUsers(users) {
   }
   return activeList;
 }
+
+## Avoiding Code Duplication
+
+**Issues with duplicated code:**
+- Repeated logic meant any bug fix or rule change had to be made in multiple places, increasing the risk of missing one and introducing inconsistent behavior.
+- Duplication made the code harder to read — it wasn't obvious at a glance that two blocks were meant to represent the same rule.
+- It increased the size of the codebase without adding value, making review and testing slower.
+
+**How refactoring improved maintainability:**
+- Extracting the shared logic into a single function/helper means the rule now lives in one place — future changes only need to happen once.
+- The code is more readable: the intent (e.g. "eligibility check") is named explicitly instead of implied by repeated conditions.
+- Testing is simpler since the shared logic can be tested once in isolation, rather than verifying the same behavior in every place it's duplicated.
