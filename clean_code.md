@@ -1,3 +1,74 @@
+# Understanding Clean Code Principles
+
+*Note: This is a practice example written to demonstrate the concept, not taken from a live project.*
+
+## The Five Principles
+
+**Simplicity** – Code should do what's needed in the most straightforward way possible. Avoid clever one-liners or unnecessary abstraction layers that make the code harder to follow than a plain, direct solution would.
+
+**Readability** – Code is read far more often than it's written. It should be understandable at a glance, using clear names, consistent structure, and logical flow, so another developer (or future you) doesn't have to decode it.
+
+**Maintainability** – Code should be easy to modify, extend, or debug later without a large risk of breaking something else. This comes from small functions, clear naming, low duplication, and good structure.
+
+**Consistency** – Following agreed style guides and project conventions (naming, formatting, file structure) means the codebase feels like it was written by one person, even with multiple contributors, which reduces friction and confusion.
+
+**Efficiency** – Code should perform well, but performance shouldn't be chased prematurely at the cost of clarity. Optimize the parts that actually matter (measured, not guessed), and keep everything else simple and readable.
+
+## Example: Messy Code
+
+```javascript
+function p(d) {
+  let r = [];
+  for (let i = 0; i < d.length; i++) {
+    if (d[i].s === 'a' && d[i].t > 0) {
+      let x = d[i].t;
+      if (x > 100) {
+        x = x * 0.9;
+      }
+      r.push({ n: d[i].n, total: x });
+    }
+  }
+  return r;
+}
+```
+
+### Why this is difficult to read
+- The function name `p` and parameter `d` give no indication of what the function does or what data it operates on.
+- Variables like `r`, `i`, `x`, `s`, `t`, and `n` are meaningless abbreviations — a reader has to trace through the logic just to guess what each one represents.
+- Magic values (`'a'`, `100`, `0.9`) are unexplained — there's no way to know `'a'` means "active" or that `0.9` represents a 10% discount without reverse-engineering the intent.
+- The function mixes multiple responsibilities at once — filtering records, applying a discount calculation, and building a result object — all inside one loop with no separation.
+
+## Cleaned-Up Rewrite
+
+```javascript
+const ACTIVE_STATUS = 'active';
+const DISCOUNT_THRESHOLD = 100;
+const DISCOUNT_RATE = 0.9;
+
+function isEligibleForDiscount(record) {
+  return record.status === ACTIVE_STATUS && record.total > 0;
+}
+
+function applyDiscount(total) {
+  return total > DISCOUNT_THRESHOLD ? total * DISCOUNT_RATE : total;
+}
+
+function getDiscountedTotals(records) {
+  return records
+    .filter(isEligibleForDiscount)
+    .map((record) => ({
+      name: record.name,
+      total: applyDiscount(record.total),
+    }));
+}
+```
+
+### Why the rewrite is cleaner
+- **Simplicity:** Using `.filter()` and `.map()` replaces the manual loop and nested conditionals with a straightforward pipeline that reads top-to-bottom.
+- **Readability:** Renaming `p`, `d`, `r`, `i`, `x`, `s`, `t`, `n` to `getDiscountedTotals`, `records`, `isEligibleForDiscount`, `applyDiscount`, `total`, `status`, `name` makes the function's purpose obvious without needing to trace the logic.
+- **Maintainability:** Splitting the logic into `isEligibleForDiscount` and `applyDiscount` means each rule can be changed independently — e.g. adjusting the discount rate only touches one small function.
+- **Consistency:** Named constants (`ACTIVE_STATUS`, `DISCOUNT_THRESHOLD`, `DISCOUNT_RATE`) replace magic values, so the same meaning is used everywhere these values appear instead of unexplained literals scattered through the code.
+- **Efficiency:** The rewrite performs the same work as the original (single pass filtering and mapping) — clarity was improved without adding unnecessary overhead.
 
 # Naming Variables & Functions
 
@@ -116,6 +187,7 @@ The refactored version validates its inputs before doing any work. It checks tha
 - A guard clause rejecting a missing or non-object `user`.
 - A guard clause rejecting a `score` that isn't a valid number (using `typeof` and `isNaN`).
 - A default-value check that sets `user.highScore` to `0` if it isn't already a number, preventing a broken comparison against `undefined`.
+
 # Commenting & Documentation
 
 *Note: This is a practice example written to demonstrate the concept, not taken from a live project.*
@@ -153,14 +225,70 @@ Comments are worth adding when they explain *why* something is done a certain wa
 
 **When should you avoid comments and instead improve the code?**
 Comments should be avoided when they simply restate what the code already says (e.g. `// add a and b`), since these add clutter and go stale as the code changes. In these cases, the better fix is to make the code self-documenting — clearer variable and function names, smaller focused functions, and simpler logic — so it doesn't need translation in the first place. If a comment is needed just to explain what a poorly named variable or overly complex line does, that's usually a sign the code itself should be refactored instead.
-# Naming Variables & Functions
-...(existing content from your doc)...
-
-# Handling Errors & Edge Cases
-...(existing content from your doc)...
-
-# Commenting & Documentation
-...(existing content from your doc)...
 
 # Code Formatting & Style Guides
-...(the new section I gave you in my last message — Research, Setup, Linter Results, Reflections)...
+
+## Research
+I reviewed the Airbnb JavaScript style guide (github.com/airbnb/javascript), focusing on the sections covering variable declarations (`const`/`let` over `var`), semicolon usage, and consistent spacing around operators.
+
+## Setup
+Installed ESLint and Prettier with:
+```bash
+npm install --save-dev eslint prettier eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier
+```
+
+Created `.eslintrc.json`:
+```json
+{
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  }
+}
+```
+
+Created `.prettierrc`:
+```json
+{
+  "singleQuote": true,
+  "semi": true,
+  "tabWidth": 2
+}
+```
+
+## Linter Results
+I created `src/example.js` with intentionally messy code and ran `npx eslint src/example.js`. The initial pass surfaced 9 errors and 1 warning:
+- `no-var`: flagged `var x = 10`, recommending `let`/`const` instead.
+- `no-unused-vars`: flagged that `x` was declared but never used.
+- `prefer-const`: flagged that `y` was never reassigned and should use `const` instead of `let`.
+- `no-console`: warned about a `console.log` statement.
+- Several `prettier/prettier` errors flagged missing semicolons, inconsistent spacing (e.g. `a+b` instead of `a + b`), and Windows-style CRLF line endings clashing with Prettier's expected LF format.
+
+Running `npx eslint src/example.js --fix` automatically resolved 8 of the 9 errors — spacing, semicolons, and the `var`/`let` → `const` conversions. After a second `--fix` pass to resolve a missing trailing newline flagged by Prettier, only one issue remained: the unused `x` variable, which was removed manually since ESLint won't guess what to do with unused code.
+
+Final linted file:
+```javascript
+function calc(a, b) {
+  const y = a + b;
+  return y;
+}
+console.log(calc(1, 2));
+```
+
+Running `npx eslint src/example.js` one final time returned **1 warning, 0 errors** — the `no-console` warning, which was kept intentionally since this file is a demo script meant to show output. In production code this would typically be removed or replaced with a proper logger.
+
+## Reflections
+
+**Why is code formatting important?**
+Running the linter on my own code showed me firsthand that formatting isn't just cosmetic — it caught a real unused variable and a `let` that should have been `const`, alongside pure style issues like spacing and semicolons. Consistent formatting keeps a codebase readable across contributors and keeps git diffs focused on logic changes instead of style noise.
+
+**What issues did the linter detect?**
+It detected a `var` that should have been `const`, an unused variable, a `let` that should have been `const` since it was never reassigned, a `console.log` statement, missing semicolons, inconsistent operator spacing, and CRLF line endings clashing with Prettier's LF default (a side effect of developing on Windows).
+
+**Did formatting the code make it easier to read?**
+Yes — after `--fix`, spacing and semicolons were normalized automatically, and correcting `let` to `const` made the code's intent clearer by showing which values never change. Manually removing the unused variable also cleaned up dead code that the linter flagged but couldn't safely delete on its own.
