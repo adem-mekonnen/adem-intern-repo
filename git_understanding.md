@@ -132,3 +132,25 @@ I opened the conflicted file and reviewed both versions side by side. I chose to
 
 **What did I learn?**
 A merge conflict isn't an error — it's Git correctly recognizing that two branches changed the same lines and it can't guess which version was intended. Resolving one means actually reading both versions and making a deliberate choice, rather than blindly accepting one side. This connects to what I saw with `git cherry-pick` in the previous issue — cherry-picking a commit onto a diverged branch triggered the exact same conflict-resolution mechanism as a normal merge, which showed me these aren't separate concepts but the same underlying process in Git.
+# Git Concepts: Staging vs. Committing
+
+## Research: The Difference
+* **Staging (`git add`):** Think of this as the "Loading Dock." You are choosing which changes you want to include in your next save. It allows you to review your work before making it permanent.
+* **Committing (`git commit`):** This is the "Warehouse." Once you commit, you are creating a permanent snapshot (a version) of your project in the history. Each commit has a unique ID and a message describing the change.
+
+## Reflection
+
+### What is the difference between staging and committing?
+Staging is an intermediate step where you prepare your files. Committing is the final step that saves those prepared files into the project's history.
+
+### Why does Git separate these two steps?
+Git separates them to give developers "granular control." For example, if I fix three different bugs in three different files, I can stage and commit them one by one so that the history is clean and easy to read, rather than having one giant "messy" commit.
+
+### When would you want to stage changes without committing?
+I would stage changes when I have finished one part of a task but want to keep working on another part before I save the whole "version." It acts as a way to "bookmark" my progress.
+
+## Practical Experiment
+In my experiments using the GitHub interface:
+1. I modified the file.
+2. The interface automatically staged the changes when I started typing the commit message.
+3. Clicking "Commit changes" performed both the staging and the committing.
