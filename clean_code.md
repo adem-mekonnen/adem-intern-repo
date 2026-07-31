@@ -72,3 +72,55 @@ function getActiveUsers(users) {
 - Extracting the shared logic into a single function/helper means the rule now lives in one place — future changes only need to happen once.
 - The code is more readable: the intent (e.g. "eligibility check") is named explicitly instead of implied by repeated conditions.
 - Testing is simpler since the shared logic can be tested once in isolation, rather than verifying the same behavior in every place it's duplicated.
+# Before — one big function doing several jobs
+def process_order(order):
+    # validate
+    if not order.items:
+        raise ValueError("Order has no items")
+    if order.total <= 0:
+        raise ValueError("Invalid total")
+    
+    # calculate discount
+    discount = 0
+    if order.total > 100:
+        discount = order.total * 0.1
+    final_total = order.total - discount
+    
+    # send confirmation
+    print(f"Sending email to {order.customer_email}")
+    print(f"Order confirmed: {final_total}")
+    
+    return final_total
+
+# After — broken into focused functions
+def validate_order(order):
+    if not order.items:
+        raise ValueError("Order has no items")
+    if order.total <= 0:
+        raise ValueError("Invalid total")
+
+def calculate_discount(total):
+    return total * 0.1 if total > 100 else 0
+
+def send_confirmation(order, final_total):
+    print(f"Sending email to {order.customer_email}")
+    print(f"Order confirmed: {final_total}")
+
+def process_order(order):
+    validate_order(order)
+    discount = calculate_discount(order.total)
+    final_total = order.total - discount
+    send_confirmation(order, final_total)
+    return final_total
+## Writing Small, Focused Functions
+
+**Why breaking down functions is beneficial:**
+- Small functions are easier to read and understand — each one answers a single, clear question about what it does.
+- They're easier to test in isolation, since each function has a narrow, predictable responsibility rather than mixed concerns.
+- They're easier to reuse — a focused function like `calculate_discount()` can be called elsewhere without dragging along unrelated logic.
+- Debugging is faster: when something breaks, a well-named small function narrows down where to look.
+
+**How refactoring improved the structure of the code:**
+- Splitting the large function into `validate_order`, `calculate_discount`, and `send_confirmation` made the responsibilities explicit instead of buried inside one long block.
+- The main `process_order` function now reads almost like a summary of the steps, which makes the overall flow easier to follow.
+- Future changes are more contained — e.g. changing the discount rule only touches `calculate_discount`, without risk of breaking validation or notification logic.
