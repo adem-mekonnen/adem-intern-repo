@@ -3,3 +3,4 @@ function calc(a, b) {
   return y;
 }
 console.log(calc(1, 2));
+// test
