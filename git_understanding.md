@@ -122,3 +122,13 @@ I created 5 commits on a test branch (`bisect-practice`), where the 4th commit (
 - Cherry-picking a commit that touches a file already modified independently on the target branch caused a real merge conflict, not a clean apply — cherry-pick behaves exactly like a merge when it comes to conflicting diffs.
 - After manually resolving that conflict, Git reported the cherry-picked commit was "now empty," since my resolution already matched the intended end state — a good reminder that Git cares about the resulting diff, not just replaying a commit's exact steps.
 - `git blame` lined up exactly with what `git bisect` had already found, which was a satisfying confirmation that both tools were pointing to the same root cause from two different angles.
+## Merge Conflicts & Conflict Resolution
+
+**What caused the conflict?**
+I created a branch (`conflict-demo`) and added a `power` function to `math.js`. Then, without merging, I switched back to `main` and added a different implementation of the same `power` function directly on `main` (using `Math.pow` instead of the `**` operator). When I ran `git merge conflict-demo`, Git couldn't automatically reconcile the two versions since both added content at the same location in the file, producing a real merge conflict marked with `<<<<<<< HEAD`, `=======`, and `>>>>>>> conflict-demo`.
+
+**How did I resolve it?**
+I opened the conflicted file and reviewed both versions side by side. I chose to keep the `Math.pow`-based implementation from `main`, removed the conflict markers and the alternate version, staged the resolved file with `git add math.js`, and completed the merge with `git commit -m "Resolve merge conflict in power function"`.
+
+**What did I learn?**
+A merge conflict isn't an error — it's Git correctly recognizing that two branches changed the same lines and it can't guess which version was intended. Resolving one means actually reading both versions and making a deliberate choice, rather than blindly accepting one side. This connects to what I saw with `git cherry-pick` in the previous issue — cherry-picking a commit onto a diverged branch triggered the exact same conflict-resolution mechanism as a normal merge, which showed me these aren't separate concepts but the same underlying process in Git.
