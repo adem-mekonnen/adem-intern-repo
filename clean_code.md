@@ -141,3 +141,16 @@ def process_order(order):
 - Renaming `calc`, `a`, `b`, `t`, and `x` to `calculate_price`, `unit_price`, `quantity`, `is_discounted`, and `total` made the function's purpose obvious at a glance.
 - Anyone reading the refactored code can understand what it does without stepping through the logic line by line.
 - It reduced the need for comments, since the names themselves now communicate intent.
+## Code Formatting & Style Guides
+
+**Why code formatting is important:**
+- Consistent formatting makes code easier to read and reduces mental overhead when switching between files or contributors.
+- It keeps git diffs focused on actual logic changes rather than formatting noise.
+- It reduces bugs — linters catch issues like unused variables or accidental loose equality before they cause problems.
+- It removes subjective debate over style, since the rules are enforced automatically rather than argued case by case.
+
+**Issues the linter detected:**
+- [Fill in with your actual results, e.g.: unused variables, inconsistent quote usage, missing semicolons, use of `var` instead of `const`/`let`, loose equality checks]
+
+**Did formatting make the code easier to read:**
+- Yes — after running Prettier and fixing ESLint warnings, indentation and spacing became consistent throughout, and the Airbnb rules around naming and structure made the code easier to scan.
