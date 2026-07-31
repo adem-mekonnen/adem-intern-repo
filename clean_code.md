@@ -34,3 +34,29 @@ function add(a, b) {
   let c = a + b; // add a and b and store in c
   return c; // return the result
 }
+---
+
+# Refactoring Code for Simplicity
+
+## Research: Refactoring Techniques
+* **Extract Method:** If a function is too long, break parts of it into smaller, named functions.
+* **Simplify Boolean Expressions:** Instead of complex `if (a == true && b == false)`, use clear logic.
+* **Remove Dead Code:** Delete variables or functions that are never used.
+* **Replace Loop with Pipeline:** Using modern methods like `.filter()` or `.map()` instead of manual `for` loops.
+
+## Code Example: Over-engineered vs. Simple
+
+### ❌ Over-engineered Code
+This code is too long and manually tracks a counter to find active users.
+```javascript
+function getActiveUsers(users) {
+  let activeList = [];
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].status === 'active') {
+      if (users[i].age > 18) {
+        activeList.push(users[i]);
+      }
+    }
+  }
+  return activeList;
+}
