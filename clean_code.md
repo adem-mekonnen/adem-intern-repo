@@ -153,3 +153,14 @@ Comments are worth adding when they explain *why* something is done a certain wa
 
 **When should you avoid comments and instead improve the code?**
 Comments should be avoided when they simply restate what the code already says (e.g. `// add a and b`), since these add clutter and go stale as the code changes. In these cases, the better fix is to make the code self-documenting — clearer variable and function names, smaller focused functions, and simpler logic — so it doesn't need translation in the first place. If a comment is needed just to explain what a poorly named variable or overly complex line does, that's usually a sign the code itself should be refactored instead.
+# Naming Variables & Functions
+...(existing content from your doc)...
+
+# Handling Errors & Edge Cases
+...(existing content from your doc)...
+
+# Commenting & Documentation
+...(existing content from your doc)...
+
+# Code Formatting & Style Guides
+...(the new section I gave you in my last message — Research, Setup, Linter Results, Reflections)...
