@@ -8,3 +8,4 @@ function power(base, exponent) { return Math.pow(base, exponent); }
 =======
 function power(a, b) { return a ** b; }
 >>>>>>> conflict-demo
+// Demonstrating a branch-only change
