@@ -124,3 +124,20 @@ def process_order(order):
 - Splitting the large function into `validate_order`, `calculate_discount`, and `send_confirmation` made the responsibilities explicit instead of buried inside one long block.
 - The main `process_order` function now reads almost like a summary of the steps, which makes the overall flow easier to follow.
 - Future changes are more contained — e.g. changing the discount rule only touches `calculate_discount`, without risk of breaking validation or notification logic.
+## Naming Variables & Functions
+
+**What makes a good variable or function name:**
+- It clearly describes the purpose or content without needing a comment to explain it.
+- Functions are named as actions (verbs), variables as things (nouns), and booleans read like questions (e.g. `isValid`).
+- Names are consistent across the codebase so similar operations aren't described differently in different places.
+
+**Issues from poorly named variables:**
+- Code becomes hard to read and understand without extra context or comments.
+- Increases the chance of bugs, since it's easy to misuse a variable when its purpose isn't clear.
+- Slows down onboarding and code review, since readers have to reverse-engineer intent from usage instead of the name itself.
+- Misleading names (e.g. a plural name for a single value) can cause confusion or outright errors.
+
+**How refactoring improved readability:**
+- Renaming `calc`, `a`, `b`, `t`, and `x` to `calculate_price`, `unit_price`, `quantity`, `is_discounted`, and `total` made the function's purpose obvious at a glance.
+- Anyone reading the refactored code can understand what it does without stepping through the logic line by line.
+- It reduced the need for comments, since the names themselves now communicate intent.
