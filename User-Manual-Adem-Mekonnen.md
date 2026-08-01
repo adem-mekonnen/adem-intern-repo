@@ -1,24 +1,34 @@
-# User Manual for Adem Mekonnen
+# 📝 User Manual for Adem Mekonnen
 
-## 🏁 My Working Style
-*   **Deep Work:** I do my best work when I have 2-3 hours of uninterrupted time to focus on complex testing or writing code.
-*   **Processing Time:** I like to take a few minutes to think about a problem or a new requirement before responding. I value "thinking before doing."
-*   **Structure:** I am highly productive when using structured to-do lists and clear milestones (like this onboarding process!).
+**My role:** Intern (QA & Automation)
+**I am working on:** Completing the Focus Bear onboarding and setting up automated test suites.
+**The days and times I work are:** [e.g., Monday to Friday, 9 AM - 5 PM]
 
-## 💬 Communication Preferences
-*   **Async First:** I prefer Discord messages for non-urgent updates. This allows me to stay focused and respond when I reach a natural stopping point.
-*   **Written Instructions:** Because I am in QA, I highly value written requirements. It helps me ensure that I am testing exactly what was intended.
-*   **Video Calls:** I’m happy to hop on a quick call to debug a complex issue or brainstorm, but I prefer if we have a clear agenda first.
+## How I Work Best
+*   **I do my best work when:** I have clear, structured tasks with well-defined goals (like the GitHub Milestones).
+*   **I struggle when:** Instructions are vague or when I have too many small, unrelated interruptions during deep work.
 
-## 🚀 How to Help Me Do My Best Work
-*   **Clear Context:** When assigning a task, please share the "Why" behind it. Knowing how a feature helps the user helps me write better test cases.
-*   **Direct Feedback:** I value honesty. If my code or report needs improvement, please tell me directly so I can learn and fix it quickly.
-*   **Documentation:** If there are existing docs or past bug reports related to my task, please link them!
+## Communication Style
+*   **I prefer messages to be:** Short, direct, and actionable.
+*   **The best way to reach me is:** Discord. I prefer async messages so I can reply when I'm at a natural stopping point.
+*   **If you need something urgent, do this:** Mention me on Discord with a "@" tag.
 
-## 💡 Feedback Style
-*   **Receiving:** I prefer written feedback so I can review it carefully. I appreciate "Actionable" feedback (e.g., "Change line 10 to X") rather than vague feedback.
-*   **Giving:** I aim to be objective and supportive. When I report a bug, it’s never personal—it’s about making the app the best it can be for our users.
+## Collaboration & Teamwork
+*   **I work best in a team when:** Everyone shares their progress openly and we use tools like Kanban boards to track status.
+*   **My biggest pet peeve in teamwork is:** Unclear requirements that lead to rework.
+*   **If I seem quiet in a meeting, it usually means:** I am listening intently and processing the information before I provide my input.
 
-## 🐧 Quirks / Things to Know
-*   I am very detail-oriented, so I might ask a lot of clarifying questions at the start of a project.
-*   I am a big fan of keyboard shortcuts and automation—if there is a way to do it faster with a script, I will probably try to find it!
+## Focus & Productivity
+*   **I stay focused by:** Using the Focus Bear app to block distractions and remind me to take micro-breaks.
+*   **Things that distract me:** Loud environments or constant "ping" notifications from non-work apps.
+*   **The best way to support my productivity is:** Providing written context for new tasks so I can reference them while I work.
+
+## Feedback & Growth
+*   **I like feedback to be:** Direct and specific. Tell me exactly what I can do better next time.
+*   **When I make a mistake, the best way to let me know is:** Send me a private message with the details so I can fix it and learn from it immediately.
+*   **I appreciate it when teammates:** Share tips or "hacks" they've discovered for the tools we use (like VS Code or Git).
+
+## Fun Facts & Quirks
+*   **One thing people often misunderstand about me is:** [e.g., That I am very serious, when I actually just enjoy deep focus.]
+*   **A fun fact about me:** [e.g., I love finding ways to automate boring tasks.]
+*   **My work superpower is:** Attention to detail. I enjoy finding the small bugs that others might miss.
