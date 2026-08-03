@@ -73,31 +73,28 @@ Manually reviewing commits means checking them one at a time, which is linear �
 
 **Hands-on test:**
 I created 5 commits on a test branch (`bisect-practice`), where the 4th commit (`d427c3b`, "Add divide function") introduced a deliberate bug — a `divide` function that multiplied instead of dividing. Using `git bisect start`, marking `ce7c1a3` (a later commit) as bad and `9caaaf7` (the first commit) as good, Git checked out `ada9a05` ("Add multiply function") first. Since the bug wasn't present at that point, I marked it good. Git then checked out `d427c3b`, which contained the bug, so I marked it bad — and Git correctly reported:
-## Advanced Git Commands & When to Use Them
+# Advanced Git Commands Reflection
 
-### `git checkout main -- <file>`
-**What it does:** Restores a specific file to match its version on another branch (e.g. `main`), without affecting any other files or the rest of your working directory.
-**When to use it:** Useful when you've made unwanted changes to a single file and want to discard just that file's edits without resetting your entire branch.
-**Test result:** On a test branch (`file-restore-test`), I made an edit to `math.js`, committed it, then ran `git checkout main -- math.js`. This restored `math.js` to `main`'s version, discarding my test edit while leaving the rest of the branch untouched — confirmed with `git status` showing the file staged as modified.
+## 1. git checkout main -- <file>
+*   **What it does:** Restores a specific file to match its version on the `main` branch without affecting other changes in the working directory.
+*   **Real Project Use Case:** If I break a configuration file that was working on `main`, I can "reset" just that file without losing my other progress on the branch.
+*   **What surprised me:** It is extremely "surgical"—it only touches the file I specify, nothing else.
 
-### `git cherry-pick <commit>`
-**What it does:** Applies the changes from one specific commit onto your current branch, without merging the entire source branch.
-**When to use it:** Useful when a specific fix or feature was committed on another branch, but you need just that one change on `main` immediately, without pulling in unrelated work.
-**Test result:** I cherry-picked commit `d427c3b` ("Add divide function") from `bisect-practice` onto `main`. Since `main`'s `math.js` had diverged (from an earlier test edit), this caused a real merge conflict, requiring manual resolution with `<<<<<<<`/`=======`/`>>>>>>>` markers. After resolving and staging the file, `git cherry-pick --continue` reported the commit was "now empty," since my manual resolution already matched the intended result — I closed it out with `git cherry-pick --skip`.
+## 2. git cherry-pick <commit>
+*   **What it does:** Applies the changes from one specific commit onto the current branch.
+*   **Real Project Use Case:** If a teammate fixes a bug on another branch, I can "cherry-pick" just that fix into my branch without merging their whole (possibly unfinished) branch.
+*   **What surprised me:** It can cause merge conflicts just like a normal merge if the files have diverged significantly.
 
-### `git log`
-**What it does:** Displays commit history, including author, date, and message. With `--oneline --graph --all`, it shows a compact, visual timeline across all branches.
-**Test result:** Running `git log --oneline --graph --all` clearly showed `file-restore-test` branching off `main` at commit `9de3c37` and never merging back, while `bisect-practice`'s commits were already part of `main`'s linear history from an earlier merge. This made the actual shape of my branching work visible at a glance, rather than something I had to infer.
+## 3. git log
+*   **What it does:** Displays the commit history. Using `--oneline --graph --all` shows a visual map of all branches.
+*   **Real Project Use Case:** Essential for understanding the "story" of the code and finding commit hashes for debugging or cherry-picking.
+*   **What surprised me:** The `--graph` view makes a complex branching history very easy to see visually.
 
-### `git blame <file>`
-**What it does:** Shows, line by line, which commit last modified each line of a file, along with the author and date.
-**Test result:** Running `git blame math.js` showed each function traced to the exact commit that introduced it — e.g. line 4 (the buggy `divide` function) correctly pointed to commit `d427c3b`, matching what `git bisect` had already identified as the source of the bug.
+## 4. git blame <file>
+*   **What it does:** Shows line-by-line which commit and author last modified each part of a file.
+*   **Real Project Use Case:** The best tool for finding "Why" a specific line was written and who to talk to if that line has a bug.
+*   **What surprised me:** It perfectly confirmed the same "buggy" commit that I found earlier using `git bisect`.
 
-### What surprised me while testing these commands
-- `git checkout main -- <file>` is more surgical than I expected — it only touches the specified file, leaving all other changes in the working directory untouched.
-- Cherry-picking a commit that touches a file already modified independently on the target branch caused a real merge conflict, not a clean apply — cherry-pick behaves exactly like a merge when it comes to conflicting diffs.
-- After manually resolving that conflict, Git reported the cherry-picked commit was "now empty," since my resolution already matched the intended end state — a good reminder that Git cares about the resulting diff, not just replaying a commit's exact steps.
-- `git blame` lined up exactly with what `git bisect` had already found, which was a satisfying confirmation that both tools were pointing to the same root cause from two different angles.
 ## Merge Conflicts & Conflict Resolution
 
 **What caused the conflict?**
