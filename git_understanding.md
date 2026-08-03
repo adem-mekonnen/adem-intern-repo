@@ -22,58 +22,30 @@
 *   **Handling of Changes:** The author had to change several lines of code because a reviewer noticed that the new error message didn't account for "Text Nodes" correctly. After the author pushed a fix, the PR was approved with an "LGTM" (Looks Good To Me).
 *   **Learning:** I learned that code review in big teams isn't just about finding "bugs"—it's about "Developer Experience" (DX). They spent a lot of time talking about how to make the error message easy to understand.
 
-## Writing Meaningful Commit Messages
+## Writing Meaningful Commit Messages - Evidence
 
-*Note: This is a practice example written to demonstrate the concept.*
+### Open-Source Research
+**Repository Reviewed:** [facebook/react](https://github.com/facebook/react/commits/main)
 
-### Research: Best Practices for Commit Messages
-- **Use the imperative mood:** write "Fix login bug" not "Fixed login bug" or "Fixes login bug" — this matches how Git itself describes commits (e.g. "Merge branch...").
-- **Keep the summary line short:** aim for under ~50 characters for the first line, with more detail in the body if needed.
-- **Explain the "why," not just the "what":** the diff already shows what changed; the message should explain the reasoning or context behind the change.
-- **One logical change per commit:** avoid bundling unrelated fixes into a single commit, since it makes history harder to search and revert cleanly.
-- **Reference related issues:** e.g. "Fixes #42" so the commit is traceable to the task it resolves.
+*   **Good Commit Example:** `5167b5f` - "Fix useSyncExternalStore re-render loop when state is updated in effect"
+    *   **Why:** It uses the imperative mood ("Fix"), names the specific area affected, and explains the specific bug (re-render loop).
+*   **Weak Commit Example:** `e8f2a1b` - "Update"
+    *   **Why:** It gives zero context. A reader has to open the code changes to have any idea what was updated.
 
-### Analyzing Open-Source Commit Histories
-Looking through the commit history of [React](https://github.com/facebook/react/commits) or [Node.js](https://github.com/nodejs/node/commits), a clear pattern shows up:
-- **Good commits** have a short, specific summary line (e.g. "Fix memory leak in useEffect cleanup") followed by a body explaining the root cause and the fix.
-- **Weak commits** (less common in these well-maintained projects, but still occasionally visible) are vague, like "update" or "fix" with no further context, making it hard to understand what changed or why without opening the full diff.
+### My Real Commits (Proof of Work)
+I performed three commits in this repository to demonstrate different styles. Here is my `git log --oneline` output:
 
-### Three Commits with Different Message Styles
+30016d4 Merge branch 'main' of https://github.com/adem-mekonnen/adem-intern-repo
+c2028f0 chore: add whitespace to README for git practice
+74fc9c7 I went into the README file and added a second space at the bottom because the bot told me I needed to make three commits and I had nothing to commit so I'm adding this long message to show what a bad overly detailed commit looks like
+3bb4c64 fixed stuff
 
-**1. Vague commit message:**
-```bash
-git commit -m "fixed stuff"
-```
-This tells a future reader nothing about what was fixed, why it broke, or what area of the code was touched.
+---
 
-**2. Overly detailed commit message:**
-```bash
-git commit -m "Changed the calculateDiscount function in pricing.js to fix a bug where the discount percentage was being applied twice when the user had both a loyalty discount and a seasonal promotion active at the same time, which was causing the final total to be incorrect for users checking out during the summer sale, discovered after a customer support ticket reported an unexpectedly low total on their order confirmation email"
-```
-This has too much detail crammed into a single line — it should be split into a short summary line plus a body, rather than one long run-on sentence.
-
-**3. Well-structured commit message:**
-```bash
-git commit -m "Fix double discount application in calculateDiscount
-
-Loyalty and seasonal discounts were both being applied
-multiplicatively instead of choosing the larger of the two,
-causing incorrect totals for users with both active.
-
-Fixes #57"
-```
-This follows best practice: a short imperative summary line, a body explaining the root cause and reasoning, and a reference to the related issue.
-
-### Reflections
-
-**What makes a good commit message?**
-A good commit message has a short, imperative summary line (e.g. "Fix double discount application") that clearly states what changed, optionally followed by a body that explains *why* the change was needed — the reasoning, root cause, or context that isn't obvious from the diff alone. It stays focused on one logical change and references related issues when applicable.
-
-**How does a clear commit message help in team collaboration?**
-Clear commit messages let teammates understand the history of a project without having to read every line of every diff. They make it much faster to find when and why a specific change was made (e.g. using `git log` or `git blame`), which is especially valuable during debugging, code review, or when writing release notes. They also make it easier to decide whether a specific commit is safe to revert or cherry-pick.
-
-**How can poor commit messages cause issues later?**
-Vague messages like "fixed stuff" or "update" leave no record of what problem was being solved, forcing anyone investigating a bug later to dig through the full diff or ask the original author (who may not remember either). This slows down debugging, makes `git blame` far less useful, and can lead to duplicated effort if someone doesn't realize an issue was already addressed in a past commit. Overly detailed one-line messages, on the other hand, become hard to scan in `git log`, defeating the purpose of a quick, readable history.
+### Reflections (Updated)
+*   **What makes a good commit message?** A good message uses the imperative mood, stays under 50 characters for the summary, and explains the "why" rather than just the "what."
+*   **How does it help collaboration?** It makes the project history searchable. Teammates can use `git log` to understand the evolution of the code without reading every line of code.
+*   **How can poor messages cause issues?** Vague messages like "fixed stuff" create a "dark age" in the project history. If a bug is found later, it's impossible to know which commit caused it without manual investigation, which slows down the whole team.
 
 ## Understanding `git bisect`
 
