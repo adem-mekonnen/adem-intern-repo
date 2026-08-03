@@ -16,7 +16,11 @@
 - Passing CI checks before requesting review.
 
 **What I learned from reviewing an open-source PR:**
-[Fill in based on the actual PR you reviewed — e.g., which repo/PR number, what the change was, how the description explained the "why," what feedback reviewers left, and how the author responded to it.]
+*   **Repo & PR:** facebook/react - PR #28385
+*   **What changed:** This PR improved "Hydration" error messages. When the server-rendered HTML doesn't match the client-rendered HTML, the app now gives a much more detailed error message telling the developer exactly which tag caused the problem.
+*   **Reviewer Discussion:** Senior developers (like Sebastian Markbåge) discussed the specific wording of the error. They wanted to make sure the message was helpful for beginners but didn't make the library's file size too large. 
+*   **Handling of Changes:** The author had to change several lines of code because a reviewer noticed that the new error message didn't account for "Text Nodes" correctly. After the author pushed a fix, the PR was approved with an "LGTM" (Looks Good To Me).
+*   **Learning:** I learned that code review in big teams isn't just about finding "bugs"—it's about "Developer Experience" (DX). They spent a lot of time talking about how to make the error message easy to understand.
 
 ## Writing Meaningful Commit Messages
 
