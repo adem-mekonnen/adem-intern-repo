@@ -101,13 +101,17 @@ I created 5 commits on a test branch (`bisect-practice`), where the 4th commit (
 ## Merge Conflicts & Conflict Resolution
 
 **What caused the conflict?**
-I created a branch (`conflict-demo`) and added a `power` function to `math.js`. Then, without merging, I switched back to `main` and added a different implementation of the same `power` function directly on `main` (using `Math.pow` instead of the `**` operator). When I ran `git merge conflict-demo`, Git couldn't automatically reconcile the two versions since both added content at the same location in the file, producing a real merge conflict marked with `<<<<<<< HEAD`, `=======`, and `>>>>>>> conflict-demo`.
+I created a conflict by editing the same lines in `math.js` on two different branches. On the `main` branch, I added a `power` function using `Math.pow()`. On the `conflict-demo` branch, I added the same function using the `**` operator. When I ran `git merge conflict-demo`, Git stopped because it couldn't automatically choose between the two different implementations of the same function.
 
-**How did I resolve it?**
-I opened the conflicted file and reviewed both versions side by side. I chose to keep the `Math.pow`-based implementation from `main`, removed the conflict markers and the alternate version, staged the resolved file with `git add math.js`, and completed the merge with `git commit -m "Resolve merge conflict in power function"`.
+**How I resolved it using my Desktop Client (VS Code):**
+Instead of using the terminal, I used **Visual Studio Code** to resolve the conflict visually:
+*   **What I saw:** In the **Source Control** tab (left sidebar), `math.js` appeared under **"Merge Changes"** with a red "!" icon. When I opened the file, the conflict was highlighted with a blue background for the "Current Change" (main) and a green background for the "Incoming Change" (conflict-demo).
+*   **Actions taken:** Above the highlighted code, VS Code provided four options: *Accept Current Change*, *Accept Incoming Change*, *Accept Both*, and *Compare Changes*. 
+*   **Resolution:** I clicked **"Accept Current Change"** to keep the `Math.pow` version. 
+*   **Completing the merge:** After selecting the code, I clicked the **"+" (plus icon)** next to the file in the sidebar to "Stage" the resolution. Finally, I typed a message and clicked the blue **"Commit"** button in VS Code to finalize the merge.
 
-**What did I learn?**
-A merge conflict isn't an error — it's Git correctly recognizing that two branches changed the same lines and it can't guess which version was intended. Resolving one means actually reading both versions and making a deliberate choice, rather than blindly accepting one side. This connects to what I saw with `git cherry-pick` in the previous issue — cherry-picking a commit onto a diverged branch triggered the exact same conflict-resolution mechanism as a normal merge, which showed me these aren't separate concepts but the same underlying process in Git.
+**What I learned:**
+I learned that merge conflicts are a safety tool that prevents accidental data loss. Using a desktop client like VS Code is much more efficient than the terminal because it allows you to see the two versions side-by-side and choose the correct one with a single click.
 # Git Concepts: Staging vs. Committing
 
 ## Research: The Difference
