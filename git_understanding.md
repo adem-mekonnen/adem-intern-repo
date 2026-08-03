@@ -21,7 +21,16 @@
 *   **Reviewer Discussion:** Senior developers (like Sebastian Markbåge) discussed the specific wording of the error. They wanted to make sure the message was helpful for beginners but didn't make the library's file size too large. 
 *   **Handling of Changes:** The author had to change several lines of code because a reviewer noticed that the new error message didn't account for "Text Nodes" correctly. After the author pushed a fix, the PR was approved with an "LGTM" (Looks Good To Me).
 *   **Learning:** I learned that code review in big teams isn't just about finding "bugs"—it's about "Developer Experience" (DX). They spent a lot of time talking about how to make the error message easy to understand.
+## Branching & Team Collaboration
 
+### Why is pushing directly to main problematic?
+Pushing directly to `main` is risky because it bypasses the review process. If you push broken code or a bug directly to the `main` branch, it immediately affects every other developer on the team and could even break the production app for real users. `main` should always be a "stable" version of the project.
+
+### How do branches help with reviewing code?
+Branches allow developers to work in a "sandbox." When a feature is finished on a branch, it is submitted as a Pull Request. This gives teammates a chance to look at the code, suggest improvements, and run automated tests *before* the code is allowed into the `main` branch. This collaborative process ensures higher code quality.
+
+### What happens if two people edit the same file on different branches?
+When both people try to merge their branches into `main`, Git will notice that the same lines were changed. This creates a **Merge Conflict**. Git will stop the merge and ask the developers to manually choose which version of the code should be kept. This prevents one person's work from accidentally being overwritten by another's.
 ## Writing Meaningful Commit Messages - Evidence
 
 ### Open-Source Research
