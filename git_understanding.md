@@ -85,25 +85,24 @@ I created 5 commits on a test branch (`bisect-practice`), where the 4th commit (
 # Advanced Git Commands Reflection
 
 ## 1. git checkout main -- <file>
-*   **What it does:** Restores a specific file to match its version on the `main` branch without affecting other changes in the working directory.
-*   **Real Project Use Case:** If I break a configuration file that was working on `main`, I can "reset" just that file without losing my other progress on the branch.
-*   **What surprised me:** It is extremely "surgical"—it only touches the file I specify, nothing else.
+*   **What it does:** This command restores a specific file to match its version on the `main` branch without affecting any other files or changes in your current working directory.
+*   **When to use it:** Use this when you've accidentally broken or deleted logic in a single file on your feature branch and want to reset just that one file back to a known-working state from the main branch.
+*   **What surprised me:** I was surprised at how "surgical" it is. It doesn't reset the whole branch, only the specific file path I provided.
 
 ## 2. git cherry-pick <commit>
-*   **What it does:** Applies the changes from one specific commit onto the current branch.
-*   **Real Project Use Case:** If a teammate fixes a bug on another branch, I can "cherry-pick" just that fix into my branch without merging their whole (possibly unfinished) branch.
-*   **What surprised me:** It can cause merge conflicts just like a normal merge if the files have diverged significantly.
+*   **What it does:** It takes the changes from a single, specific commit from another branch and applies them directly onto your current branch as a new commit.
+*   **When to use it:** Use this when a colleague has fixed a critical bug on a different branch, and you need that specific fix immediately in your own work without merging their entire (possibly unfinished) branch.
+*   **What surprised me:** I learned that cherry-picking behaves like a merge; if the file has changed on both branches, it can trigger a real merge conflict that requires manual resolution.
 
 ## 3. git log
-*   **What it does:** Displays the commit history. Using `--oneline --graph --all` shows a visual map of all branches.
-*   **Real Project Use Case:** Essential for understanding the "story" of the code and finding commit hashes for debugging or cherry-picking.
-*   **What surprised me:** The `--graph` view makes a complex branching history very easy to see visually.
+*   **What it does:** It displays the commit history of the repository, including author, date, and messages. Using `--oneline --graph --all` provides a visual map of the project's evolution.
+*   **When to use it:** I would use this to find a specific commit hash for `git bisect` or `git cherry-pick`. It is also essential for understanding who changed what and when, which helps in team collaboration.
+*   **What surprised me:** The `--graph` view was a huge help. It turned a list of text into a visual map that showed exactly where my feature branches diverged from and merged back into the main history.
 
 ## 4. git blame <file>
-*   **What it does:** Shows line-by-line which commit and author last modified each part of a file.
-*   **Real Project Use Case:** The best tool for finding "Why" a specific line was written and who to talk to if that line has a bug.
-*   **What surprised me:** It perfectly confirmed the same "buggy" commit that I found earlier using `git bisect`.
-
+*   **What it does:** It shows a line-by-line history of a file, identifying exactly which commit and author last modified every single line of code.
+*   **When to use it:** This is the best tool for debugging. When I find a suspicious line of code, I use `git blame` to see the original commit message. This gives me the context of *why* that line was written that way.
+*   **What surprised me:** It surprised me how well `git blame` and `git bisect` work together. `git blame` pointed me to the exact same "buggy" commit that I found earlier using the binary search method.
 ## Merge Conflicts & Conflict Resolution
 
 **What caused the conflict?**
