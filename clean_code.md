@@ -1,14 +1,14 @@
-# Handling Errors & Edge Cases (Practice Example)
+# Handling Errors & Edge Cases
 
 ## Research: Strategies for Robust Code
-* **Guard Clauses:** These are checks at the beginning of a function that return early if a condition is not met. This prevents deeply nested "if" statements and keeps the main logic flat and readable.
-* **Input Validation:** Checking that data entering a function is the correct type (e.g., ensuring a score is a number, not a string) before the code tries to process it.
-* **Graceful Failure:** Ensuring that if an error happens, the app returns a helpful message or safe fallback instead of crashing or throwing a fatal error.
+* **Guard Clauses:** Checks at the beginning of a function that return early if a condition isn't met. This prevents deeply nested "if" statements and keeps logic flat.
+* **Input Validation:** Ensuring data is the correct type (e.g., ensuring a score is a number, not a string) before processing.
+* **Graceful Failure:** Returning a helpful message instead of allowing the app to crash.
 
 ## Code Refactoring Example
 
 ### ❌ Original Function (No Error Handling)
-This function crashes if the `user` object is missing or if the `score` is not a valid number.
+This function is fragile because it assumes the `user` exists. It will crash if `user` is null.
 ```javascript
 function updateHighScore(user, score) {
   if (score > user.highScore) {
@@ -32,7 +32,7 @@ function updateHighScore(user, score) {
     user.highScore = 0;
   }
 
-  // Core Logic
+  // Core Logic: Only runs if all guards pass
   if (score > user.highScore) {
     user.highScore = score;
     return "New record!";
