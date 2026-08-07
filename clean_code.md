@@ -141,3 +141,27 @@ I installed the necessary developer dependencies using the following command:
 
 ```bash
 npm install --save-dev eslint prettier eslint-config-prettier eslint-plugin-prettier
+function updateHighScore(user, score) {
+  // 1. Guard clause: reject if user object is missing
+  if (!user || typeof user !== 'object') {
+    return "Error: invalid user provided.";
+  }
+
+  // 2. Guard clause: reject if score isn't a valid number
+  if (typeof score !== 'number' || isNaN(score)) {
+    return "Error: score must be a valid number.";
+  }
+
+  // 3. Handle missing property: Default highScore to 0 if it doesn't exist
+  if (typeof user.highScore !== 'number') {
+    user.highScore = 0;
+  }
+
+  // Core Logic: Only runs if all guards pass
+  if (score > user.highScore) {
+    user.highScore = score;
+    return "New record!";
+  }
+
+  return "Score did not beat the current record.";
+}
