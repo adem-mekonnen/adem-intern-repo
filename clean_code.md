@@ -125,3 +125,19 @@ function updateHighScore(user, score) {
 
   return "Score did not beat the current record.";
 }
+# Code Formatting & Style Guides
+
+## 1. Why Code Formatting Matters
+Consistent code formatting is vital for team collaboration. It ensures that the codebase is readable by everyone and prevents "diff noise" in Pull Requests where simple spacing changes hide actual logic changes. It allows developers to focus on the code's functionality rather than its appearance.
+
+## 2. Airbnb JavaScript Style Guide Takeaways
+I reviewed the Airbnb guide and implemented these key rules:
+* **Prefer const/let over var:** To avoid issues with variable hoisting and scoping.
+* **Semicolons:** Always required to prevent ambiguity in JavaScript's automatic semicolon insertion.
+* **Indentation:** Airbnb enforces 2-space indentation for better readability on small screens.
+
+## 3. Environment Setup (ESLint & Prettier)
+I installed the necessary developer dependencies using the following command:
+
+```bash
+npm install --save-dev eslint prettier eslint-config-prettier eslint-plugin-prettier
